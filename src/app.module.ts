@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { RedisService } from './infra/redis';
 import { ConfigModule } from '@nestjs/config';
 import { RedisModule } from './infra/redis/redis.module';
 
@@ -16,7 +15,6 @@ import { RedisModule } from './infra/redis/redis.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [RedisService, AppService],
-  exports: [RedisService],
+  providers: [AppService],
 })
 export class AppModule {}
