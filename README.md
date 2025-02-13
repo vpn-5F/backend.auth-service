@@ -32,9 +32,9 @@ A robust authentication service built with NestJS, featuring user management, JW
 ### Prerequisites
 - `bash`
 
-- `node >= 14.0.0`
+- `node >= 22.13.1`
 
-- `npm >= 6.0.0`
+- `pnpm >= 10.3.0`
 
 - `postgresql >= 12`
 
@@ -43,21 +43,69 @@ A robust authentication service built with NestJS, featuring user management, JW
 ### Installation
 
 1. Clone the repository
+2. install dependencies:
+```bash
+pnpm install
+```
+3. create .env file and set environment variables:
 
+| Variable          | Description                                     |
+|-------------------|-------------------------------------------------|
+| APP_PORT          | Port number for the application (default: 3001) |
+| POSTGRES_USER     | PostgreSQL database username                    |
+| POSTGRES_PASSWORD | PostgreSQL database password                    |
+| POSTGRES_DB       | PostgreSQL database name                        |
+| POSTGRES_PORT     | PostgreSQL server port (default: 5432)          |
+| POSTGRES_HOST     | PostgreSQL server host address                  |
+| REDIS_PASSWORD    | Redis server password                           |
+| REDIS_PORT        | Redis server port (default: 6379)               |
+| JWT_SECRET        | Secret key for JWT token generation             |
+
+4. docker containers up
+```bash
+ docker compose up -d
+```
+5. run app
+```bash
+pnpm run start:dev
+```
 ## 🏗️ Project Structure
 
 ```
 src/
-├── auth/
-│   └── entity/
-│       └── user.entity.ts
-├── infra/
-│   ├── db/
-│   │   └── typeorm.config.ts
-│   └── redis/
-│       └── redis.module.ts
-├── app.module.ts
-└── main.ts
+├── src
+│   ├── app.controller.spec.ts
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── auth
+│   │   ├── auth.module.ts
+│   │   ├── auth.service.ts
+│   │   ├── controllers
+│   │   │   ├── auth.controller.ts
+│   │   │   └── index.ts
+│   │   ├── dto
+│   │   │   ├── index.ts
+│   │   │   └── sign.dto.ts
+│   │   ├── entity
+│   │   │   ├── index.ts
+│   │   │   └── user.entity.ts
+│   │   ├── guards
+│   │   │   ├── index.ts
+│   │   │   └── jwt-auth.guard.ts
+│   │   ├── index.ts
+│   │   └── jwt.strategy.ts
+│   ├── infra
+│   │   ├── db
+│   │   │   ├── index.ts
+│   │   │   ├── migrations
+│   │   │   └── typeorm.config.ts
+│   │   ├── index.ts
+│   │   └── redis
+│   │       ├── index.ts
+│   │       ├── redis.module.ts
+│   │       └── redis.service.ts
+│   └── main.ts
 ```
 
 ## 💡 User Entity Schema
@@ -82,11 +130,8 @@ src/
 - Whitelist validation
 - Request transformation
 
-## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 🎯 Roadmap
+## 🎯 Roadmap for future
 
 - [ ] Add OAuth2 integration
 - [ ] Implement refresh tokens
