@@ -1,16 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AppDataSource } from './infra/db';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap(): Promise<void> {
-  AppDataSource.initialize()
-    .then(() => {
-      console.log('Data base conected');
-    })
-    .catch((error) => console.log('Data base error conect:', error));
-
   const appPort = Number(process.env.APP_PORT);
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+      stopAtFirstError: true,
+    }),
+  );
   await app.listen(appPort, () => {
     console.log(`Server is rining on port ${appPort}`);
   });
