@@ -2,8 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entity';
-import { SignInDto, SignUpDto } from './dto';
+import { User } from '../entity';
+import { SignInDto, SignUpDto } from '../dto';
 import { hash, verify } from 'argon2';
 import { RedisService } from '@/infra/redis';
 
@@ -20,18 +20,26 @@ export class AuthService {
     const { email, password, name, mode } = signUpDto;
 
     const existingUser = await this.usersRepository.findOne({
-      where: { email },
+      where: [{ email }, { name }],
     });
     if (existingUser) {
-      throw new UnauthorizedException('Email already exists');
+      throw new UnauthorizedException('User already exists');
     }
 
     const hashedPassword = await hash(password);
+
+    const nowTime = new Date();
+    const futureDate = new Date(nowTime);
+
+    futureDate.setDate(nowTime.getDate() + 30);
+
     const user = this.usersRepository.create({
       email,
       password: hashedPassword,
       name,
       mode,
+      dayFrom: nowTime,
+      dayTo: futureDate,
     });
     await this.usersRepository.save(user);
 
@@ -53,18 +61,16 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    const isPasswordValid = await verify(password, user.password);
+    const isPasswordValid = await verify(user.password, password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
     const token = this.jwtService.sign({
       sub: user.id,
       email: user.email,
     });
 
-    await this.redisService.set(`auth_${user.id}`, token);
+    await this.redisService.set(user.id, token);
 
     return { token };
   }

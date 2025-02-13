@@ -1,5 +1,5 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
-import { AuthService } from '../auth.service';
+import { Controller, Post, Body, UseGuards, Req, Get } from '@nestjs/common';
+import { AuthService } from '../services/auth.service';
 import { SignInDto, SignUpDto } from '../dto';
 import { JwtAuthGuard } from '../guards';
 
@@ -22,5 +22,11 @@ export class AuthController {
   async signOut(@Req() req: { user: { userId: string } }) {
     await this.authService.signOut(req.user.userId);
     return { message: 'Successfully signed out' };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('ping')
+  test() {
+    return { data: 'ok' };
   }
 }
