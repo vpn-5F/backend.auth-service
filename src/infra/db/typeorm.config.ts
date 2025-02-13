@@ -13,8 +13,8 @@ const AppDataSource = new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  synchronize: true, // true just at development
-  logging: true, // true just at development
+  synchronize: false, // true just at development
+  logging: false, // true just at development
   entities: ['src/auth/entity/*.entity.ts'],
   migrations: [join(__dirname, 'migrations/*.ts')],
   migrationsTableName: 'migrations',
@@ -33,6 +33,6 @@ export const databaseConfig: TypeOrmModuleOptions = {
   database: process.env.POSTGRES_DB,
   entities: [User],
   synchronize: false,
-  logging: true,
+  logging: false,
   migrationsRun: true,
 };
