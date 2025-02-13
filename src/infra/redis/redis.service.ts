@@ -12,7 +12,6 @@ export class RedisService {
       port: this.configService.get<number>('REDIS_PORT'),
       password: this.configService.get<string>('REDIS_PASSWORD'),
     });
-    console.log('Redis connected');
     this.redis.on('error', (error) => {
       console.error('Redis connection error:', error);
     });
