@@ -72,7 +72,6 @@ pnpm run start:dev
 ## 🏗️ Project Structure
 
 ```
-src/
 ├── src
 │   ├── app.controller.spec.ts
 │   ├── app.controller.ts
