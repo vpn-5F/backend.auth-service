@@ -1,15 +1,15 @@
-# 🚀 NestJS Authentication Service
+# 🚀 NestJS Authorization Service
 
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 
-A robust authentication service built with NestJS, featuring user management, JWT authentication, and subscription modes.
+A robust authorization service built with NestJS, featuring user management, JWT authorization, and subscription modes.
 
 ## ✨ Features
 
-- 🔐 Secure JWT Authentication
+- 🔐 Secure JWT authorization
 - 👥 User Management System
 - 💫 Subscription Modes (Lite/Standard)
 - 🗄️ PostgreSQL Database Integration
@@ -124,7 +124,7 @@ src/
 ## 🔒 Security Features
 
 - Password hashing
-- JWT token authentication
+- JWT token authorization
 - Input validation and sanitization
 - Rate limiting (Redis-based)
 - Whitelist validation
