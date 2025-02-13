@@ -99,7 +99,6 @@ src/
 │   │   ├── db
 │   │   │   ├── index.ts
 │   │   │   ├── migrations
-│   │   │   │   └── 1739418372674-CreateUsersTable.ts
 │   │   │   └── typeorm.config.ts
 │   │   ├── index.ts
 │   │   └── redis
